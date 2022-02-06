@@ -1,14 +1,14 @@
 package tgeindre.Synthesizer;
 
-import tgeindre.Synthesizer.Generator.Instrument.AllKeys;
-import tgeindre.Synthesizer.Generator.Instrument.Preset.Default;
-import tgeindre.Synthesizer.Generator.Stack;
-import tgeindre.Synthesizer.Input.Clip.Clip;
-import tgeindre.Synthesizer.Input.Message;
-import tgeindre.Synthesizer.Ouput.Output;
-import tgeindre.Synthesizer.Ouput.System;
-import tgeindre.Synthesizer.Song.Clip.Insomnia.MainMelody;
-import tgeindre.Synthesizer.Time.Clock;
+import tgeindre.Synthesizer.Dsp.Generator.Instrument.AllKeys;
+import tgeindre.Synthesizer.Dsp.Generator.Instrument.Preset.Default;
+import tgeindre.Synthesizer.Dsp.Generator.Stack;
+import tgeindre.Synthesizer.Dsp.Input.Clip.Clip;
+import tgeindre.Synthesizer.Dsp.Input.Message;
+import tgeindre.Synthesizer.Dsp.Ouput.Output;
+import tgeindre.Synthesizer.Dsp.Ouput.System;
+import tgeindre.Synthesizer.Dsp.Song.Clip.Insomnia.MainMelody;
+import tgeindre.Synthesizer.Dsp.Time.Clock;
 
 import javax.sound.sampled.LineUnavailableException;
 
