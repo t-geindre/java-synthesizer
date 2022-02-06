@@ -22,7 +22,7 @@ public class Envelope implements Generator, Over
         phase = Phase.ATTACK;
     }
 
-    public void noteOn()
+    public void noteOn(double velocity)
     {
         lifeTime = 0;
         timeOff = 0;
@@ -47,7 +47,6 @@ public class Envelope implements Generator, Over
     {
         lifeTime += deltaTime;
         computeAmplitude();
-
         return oscillator.getValue(deltaTime) * amplitude;
     }
 

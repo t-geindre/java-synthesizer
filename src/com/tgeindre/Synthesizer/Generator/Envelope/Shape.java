@@ -23,7 +23,7 @@ public class Shape {
             new Linear(0, attackAmplitude, attackDuration),
             new Linear(sustainAmplitude, decayDuration),
             new Constant(sustainAmplitude),
-            new Linear(sustainAmplitude, releaseDuration)
+            new Linear(0, releaseDuration)
         );
     }
 

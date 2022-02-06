@@ -1,10 +1,13 @@
 package com.tgeindre.Synthesizer;
 
-import com.tgeindre.Synthesizer.Generator.Instrument.Instrument;
-import com.tgeindre.Synthesizer.Generator.Instrument.Preset.Test;
+import com.tgeindre.Synthesizer.Generator.Instrument.AllKeys;
+import com.tgeindre.Synthesizer.Generator.Instrument.Preset.PolySynth;
 import com.tgeindre.Synthesizer.Generator.Stack;
+import com.tgeindre.Synthesizer.Input.Clip.Clip;
+import com.tgeindre.Synthesizer.Input.Message;
 import com.tgeindre.Synthesizer.Ouput.Output;
 import com.tgeindre.Synthesizer.Ouput.System;
+import com.tgeindre.Synthesizer.Song.Clip.Insomnia.MainMelody;
 import com.tgeindre.Synthesizer.Time.Clock;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -22,19 +25,24 @@ public class Main
 
         Clock clock = output.getClock();
 
-        Instrument inst = new Instrument(new Test());
-        inst.noteOn("C4", 1);
-        inst.noteOn("C5", 1);
+        AllKeys inst = new AllKeys(new PolySynth());
 
         Stack stack = new Stack();
         stack.add(inst);
 
-        while (clock.getTime() < 10000000) {
-            if (clock.getTime() > 1000000) {
-                inst.noteOff("C4");
-                inst.noteOff("C5");
+        Clip clip = new MainMelody();
+
+        while (!clip.isOver() || !inst.isOver()) {
+            for (Message message : clip.pullMessages(clock.getTime())) {
+                if (message.isOn()) {
+                    inst.noteOn(message.getNote(), 1);
+                } else {
+                    inst.noteOff(message.getNote());
+                }
             }
-            output.addSample(stack.getValue(clock.getTime()) * 10000);
+            output.addSample(stack.getValue(clock.getTickDuration()));
         }
+
+        output.close();
     }
 }

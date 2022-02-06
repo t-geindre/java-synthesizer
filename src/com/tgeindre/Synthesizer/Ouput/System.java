@@ -5,12 +5,14 @@ import com.tgeindre.Synthesizer.Time.Clock;
 import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
 
-public class System implements Output {
+public class System implements Output
+{
     private int sampleRate;
     private int sampleSize = 2;
     private SourceDataLine line;
     private ByteBuffer buffer;
     private Clock clock;
+    int volume = 1000; // 0-1000
 
     public System() throws LineUnavailableException
     {
@@ -29,7 +31,7 @@ public class System implements Output {
         clock.tick();
 
         buffer.clear();
-        buffer.putShort((short) sample);
+        buffer.putShort(getShortSample(sample));
         line.write(buffer.array(), 0, buffer.position());
 
         while (line.available() == 0) {
@@ -37,6 +39,15 @@ public class System implements Output {
                 Thread.sleep(1);
             } catch (InterruptedException e) {};
         }
+    }
+
+    private short getShortSample(double sample)
+    {
+        sample = sample * Short.MAX_VALUE * ((double)volume / 20000);
+        sample = sample > Short.MAX_VALUE ? Short.MAX_VALUE : sample;
+        sample = sample < -Short.MAX_VALUE ? -Short.MAX_VALUE : sample;
+
+        return (short) sample;
     }
 
     @Override

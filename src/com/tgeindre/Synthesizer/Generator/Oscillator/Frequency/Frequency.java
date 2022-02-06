@@ -14,5 +14,15 @@ public class Frequency
         return freq;
     }
 
+    public void detune(double step)
+    {
+        this.freq += step / 1000000;
+    }
+
+    public Frequency clone()
+    {
+        return new Frequency(freq * 1000000);
+    }
+
     // Todo add LFO
 }

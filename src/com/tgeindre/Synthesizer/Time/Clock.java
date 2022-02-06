@@ -3,10 +3,10 @@ package com.tgeindre.Synthesizer.Time;
 public class Clock
 {
     // micro second
-    private int time;
-    private int tickDuration;
+    private double time;
+    private double tickDuration;
 
-    public Clock(int tickDuration)
+    public Clock(double tickDuration)
     {
         this.tickDuration = tickDuration;
         time = 0;
@@ -17,12 +17,12 @@ public class Clock
         time += tickDuration;
     }
 
-    public int getTime()
+    public double getTime()
     {
         return time;
     }
 
-    public int getTickDuration()
+    public double getTickDuration()
     {
         return tickDuration;
     }
