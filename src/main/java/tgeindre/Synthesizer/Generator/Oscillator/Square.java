@@ -27,36 +27,36 @@ public class Square implements Oscillator
     @Override
     public Oscillator clone()
     {
-        return null;
+        return new Square(sin.getFrequency(), amplitude, sin.getPhase());
     }
 
     @Override
     public Frequency getFrequency()
     {
-        return null;
+        return sin.getFrequency();
     }
 
     @Override
     public void setFrequency(Frequency freq)
     {
-
+        sin.setFrequency(freq);
     }
 
     @Override
     public void setFrequency(double freq)
     {
-
+        sin.setFrequency(freq);
     }
 
     @Override
     public void setPhase(double phase)
     {
-
+        sin.setPhase(phase);
     }
 
     @Override
     public double getPhase()
     {
-        return 0;
+        return sin.getPhase();
     }
 }

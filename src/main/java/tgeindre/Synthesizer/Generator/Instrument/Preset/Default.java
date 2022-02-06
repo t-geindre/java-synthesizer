@@ -7,6 +7,8 @@ import tgeindre.Synthesizer.Generator.Generator;
 import tgeindre.Synthesizer.Generator.Instrument.Preset.Utils.Unison;
 import tgeindre.Synthesizer.Generator.Oscillator.Oscillator;
 import tgeindre.Synthesizer.Generator.Oscillator.SawTooth;
+import tgeindre.Synthesizer.Generator.Oscillator.Square;
+import tgeindre.Synthesizer.Generator.Oscillator.Triangle;
 
 public class Default implements Preset
 {
@@ -15,9 +17,9 @@ public class Default implements Preset
     public Default()
     {
         unison = new Unison();
-        unison.setVoices(10);
-        unison.setDetuneStep(.6);
-        unison.setDephaseStep(9000);
+        unison.setVoices(8);
+        unison.setDetuneStep(.2);
+        unison.setDephaseStep(0);
     }
 
     @Override

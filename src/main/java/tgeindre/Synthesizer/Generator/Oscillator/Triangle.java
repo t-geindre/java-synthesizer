@@ -27,36 +27,36 @@ public class Triangle implements Oscillator
     @Override
     public Oscillator clone()
     {
-        return null;
+        return new Triangle(sin.getFrequency(), amplitude, sin.getPhase());
     }
 
     @Override
     public Frequency getFrequency()
     {
-        return null;
+        return sin.getFrequency();
     }
 
     @Override
     public void setFrequency(Frequency freq)
     {
-
+        sin.setFrequency(freq);
     }
 
     @Override
     public void setFrequency(double freq)
     {
-
+        sin.setFrequency(new Frequency(freq));
     }
 
     @Override
     public void setPhase(double phase)
     {
-
+        sin.setPhase(phase);
     }
 
     @Override
     public double getPhase()
     {
-        return 0;
+        return sin.getPhase();
     }
 }

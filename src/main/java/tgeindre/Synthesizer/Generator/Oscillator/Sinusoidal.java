@@ -33,36 +33,36 @@ public class Sinusoidal implements Oscillator
     @Override
     public Oscillator clone()
     {
-        return null;
+        return new Sinusoidal(freq, amplitude, phase);
     }
 
     @Override
     public Frequency getFrequency()
     {
-        return null;
+        return freq;
     }
 
     @Override
     public void setFrequency(Frequency freq)
     {
-
+        this.freq = freq;
     }
 
     @Override
     public void setFrequency(double freq)
     {
-
+        this.freq = new Frequency(freq);
     }
 
     @Override
     public void setPhase(double phase)
     {
-
+        this.phase = phase;
     }
 
     @Override
     public double getPhase()
     {
-        return 0;
+        return phase;
     }
 }
