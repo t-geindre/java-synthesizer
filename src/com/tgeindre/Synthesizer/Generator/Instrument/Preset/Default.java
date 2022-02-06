@@ -2,18 +2,17 @@ package com.tgeindre.Synthesizer.Generator.Instrument.Preset;
 
 import com.tgeindre.Synthesizer.Generator.Effect.Delay;
 import com.tgeindre.Synthesizer.Generator.Effect.Effect;
-import com.tgeindre.Synthesizer.Generator.Effect.Void;
 import com.tgeindre.Synthesizer.Generator.Envelope.Shape;
 import com.tgeindre.Synthesizer.Generator.Generator;
 import com.tgeindre.Synthesizer.Generator.Instrument.Preset.Utils.Unison;
 import com.tgeindre.Synthesizer.Generator.Oscillator.Oscillator;
 import com.tgeindre.Synthesizer.Generator.Oscillator.SawTooth;
 
-public class PolySynth implements Preset
+public class Default implements Preset
 {
     private Unison unison;
 
-    public PolySynth()
+    public Default()
     {
         unison = new Unison();
         unison.setVoices(10);

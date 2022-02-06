@@ -1,7 +1,7 @@
 package com.tgeindre.Synthesizer;
 
 import com.tgeindre.Synthesizer.Generator.Instrument.AllKeys;
-import com.tgeindre.Synthesizer.Generator.Instrument.Preset.PolySynth;
+import com.tgeindre.Synthesizer.Generator.Instrument.Preset.Default;
 import com.tgeindre.Synthesizer.Generator.Stack;
 import com.tgeindre.Synthesizer.Input.Clip.Clip;
 import com.tgeindre.Synthesizer.Input.Message;
@@ -25,7 +25,7 @@ public class Main
 
         Clock clock = output.getClock();
 
-        AllKeys inst = new AllKeys(new PolySynth());
+        AllKeys inst = new AllKeys(new Default());
 
         Stack stack = new Stack();
         stack.add(inst);
