@@ -1,4 +1,4 @@
-package tgeindre.Synthesizer.Dsp.Input.Clip;
+package tgeindre.Synthesizer.Input.Producer.Clip;
 
 public class Note {
     private String note;

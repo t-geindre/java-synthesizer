@@ -1,6 +1,6 @@
-package tgeindre.Synthesizer.Dsp.Input.Clip;
+package tgeindre.Synthesizer.Input.Producer.Clip;
 
-public class Message implements tgeindre.Synthesizer.Dsp.Input.Message
+public class Message implements tgeindre.Synthesizer.Input.Producer.Message
 {
     private String note;
     private boolean isOn;

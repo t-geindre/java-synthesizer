@@ -2,16 +2,15 @@ package tgeindre.Synthesizer.Dsp.Generator.Instrument;
 
 import tgeindre.Synthesizer.Dsp.Generator.Effect.Effect;
 import tgeindre.Synthesizer.Dsp.Generator.Envelope.Envelope;
-import tgeindre.Synthesizer.Dsp.Generator.Generator;
 import tgeindre.Synthesizer.Dsp.Generator.Instrument.Preset.Preset;
 import tgeindre.Synthesizer.Dsp.Generator.Oscillator.Frequency.NoteReference;
 import tgeindre.Synthesizer.Dsp.Generator.Oscillator.Oscillator;
-import tgeindre.Synthesizer.Dsp.Generator.Over;
 import tgeindre.Synthesizer.Dsp.Generator.Stack;
 
 import java.util.HashMap;
 
-public class AllKeys implements Generator, Over {
+public class AllKeys implements Instrument
+{
 
     private Preset preset;
     private NoteReference noteReference;
@@ -35,6 +34,7 @@ public class AllKeys implements Generator, Over {
         generatorsWithEffect = preset.getEffectChain(generators);
     }
 
+    @Override
     public void noteOn(String note, double velocity)
     {
         if (!noteReference.getReference().containsKey(note)) {
@@ -54,6 +54,7 @@ public class AllKeys implements Generator, Over {
         notesOn.put(note, env);
     }
 
+    @Override
     public void noteOff(String note)
     {
         if (notesOn.containsKey(note)) {
@@ -63,11 +64,13 @@ public class AllKeys implements Generator, Over {
         }
     }
 
+    @Override
     public void sustainOn()
     {
 
     }
 
+    @Override
     public void sustainOff()
     {
 

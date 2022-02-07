@@ -1,6 +1,6 @@
-package tgeindre.Synthesizer.Dsp.Song.Clip.Insomnia;
+package tgeindre.Synthesizer.Input.Song.Clip.Insomnia;
 
-import tgeindre.Synthesizer.Dsp.Input.Clip.Clip;
+import tgeindre.Synthesizer.Input.Producer.Clip.Clip;
 
 public class MainMelody extends Clip
 {

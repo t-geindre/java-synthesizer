@@ -1,7 +1,7 @@
-package tgeindre.Synthesizer.Dsp.Input.Clip;
+package tgeindre.Synthesizer.Input.Producer.Clip;
 
-import tgeindre.Synthesizer.Dsp.Input.Message;
-import tgeindre.Synthesizer.Dsp.Input.Producer;
+import tgeindre.Synthesizer.Input.Producer.Message;
+import tgeindre.Synthesizer.Input.Producer.Producer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -64,7 +64,7 @@ public class Clip implements Producer {
         while (index < maxIndex) {
             Note note = partition.get(index);
             if (note.getAt() < time) {
-                messages.add(new tgeindre.Synthesizer.Dsp.Input.Clip.Message(note.getNote(), true));
+                messages.add(new tgeindre.Synthesizer.Input.Producer.Clip.Message(note.getNote(), true));
                 notesOn.add(note);
                 index++;
             }
@@ -74,7 +74,7 @@ public class Clip implements Producer {
         ArrayList<Note> notesOff = new ArrayList<>();
         for (Note note: notesOn) {
             if (note.getAt() + note.getDuration() < time) {
-                messages.add(new tgeindre.Synthesizer.Dsp.Input.Clip.Message(note.getNote(), false));
+                messages.add(new tgeindre.Synthesizer.Input.Producer.Clip.Message(note.getNote(), false));
                 notesOff.add(note);
             }
         }

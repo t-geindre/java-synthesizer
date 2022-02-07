@@ -26,4 +26,9 @@ public class Clock
     {
         return tickDuration;
     }
+
+    public void reset()
+    {
+        time = 0;
+    }
 }

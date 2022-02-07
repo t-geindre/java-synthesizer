@@ -1,4 +1,4 @@
-package tgeindre.Synthesizer.Dsp.Input;
+package tgeindre.Synthesizer.Input.Producer;
 
 public interface Message {
     String getNote();
