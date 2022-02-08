@@ -1,7 +1,9 @@
 package tgeindre.Synthesizer.Gui.View;
 
+import jiconfont.icons.font_awesome.FontAwesome;
+import jiconfont.swing.IconFontSwing;
 import tgeindre.Synthesizer.Gui.Component.Player;
-import tgeindre.Synthesizer.Input.Arranger;
+import tgeindre.Synthesizer.Gui.Input.Arranger;
 
 import javax.swing.*;
 
@@ -32,5 +34,7 @@ public class Main extends JFrame
         } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
+
+        IconFontSwing.register(FontAwesome.getIconFont());
     }
 }

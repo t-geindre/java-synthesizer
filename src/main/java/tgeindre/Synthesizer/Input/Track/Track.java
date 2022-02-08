@@ -2,26 +2,29 @@ package tgeindre.Synthesizer.Input.Track;
 
 import tgeindre.Synthesizer.Dsp.Generator.Generator;
 import tgeindre.Synthesizer.Dsp.Generator.Instrument.Instrument;
-import tgeindre.Synthesizer.Input.Producer.Clip.Note;
+import tgeindre.Synthesizer.Dsp.Generator.Over;
 import tgeindre.Synthesizer.Input.Producer.Message;
 import tgeindre.Synthesizer.Input.Producer.Producer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class Track implements Generator
+public class Track implements Generator, Over
 {
     double length;
     Instrument instrument;
+    String name;
     ArrayList<ProducerOnTrack> producers;
     ProducerOnTrack producer;
     int maxIndex;
     int index;
     double lifeTime;
+    double lastSample;
 
-    public Track(Instrument instrument)
+    public Track(Instrument instrument, String name)
     {
         this.instrument = instrument;
+        this.name = name;
         producers = new ArrayList<>();
         index = 0;
         maxIndex = 0;
@@ -52,7 +55,19 @@ public class Track implements Generator
         updateProducers();
         pullMessages();
 
-        return instrument.getValue(deltaTime);
+        lastSample = instrument.getValue(deltaTime);
+
+        return lastSample;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     private void pullMessages()
@@ -98,5 +113,11 @@ public class Track implements Generator
 
         ProducerOnTrack lastProducer = producers.get(maxIndex - 1);
         length = lastProducer.getAt() + lastProducer.getLength();
+    }
+
+    @Override
+    public boolean isOver()
+    {
+        return index >= maxIndex && (producer == null || producer.isOver()) && lastSample == 0;
     }
 }
