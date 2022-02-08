@@ -38,4 +38,10 @@ public class ProducerOnTrack implements Producer
     {
         return producer.isOver();
     }
+
+    @Override
+    public void reset()
+    {
+        producer.reset();
+    }
 }

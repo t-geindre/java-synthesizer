@@ -1,14 +1,8 @@
 package tgeindre.Synthesizer.Input;
 
-import tgeindre.Synthesizer.Dsp.Generator.Instrument.AllKeys;
-import tgeindre.Synthesizer.Dsp.Generator.Instrument.Instrument;
-import tgeindre.Synthesizer.Dsp.Generator.Instrument.Preset.Default;
 import tgeindre.Synthesizer.Dsp.Generator.Stack;
-import tgeindre.Synthesizer.Input.Producer.Clip.Clip;
-import tgeindre.Synthesizer.Input.Producer.Message;
 import tgeindre.Synthesizer.Dsp.Ouput.Output;
 import tgeindre.Synthesizer.Dsp.Ouput.System;
-import tgeindre.Synthesizer.Input.Song.Clip.Insomnia.MainMelody;
 import tgeindre.Synthesizer.Dsp.Time.Clock;
 import tgeindre.Synthesizer.Input.Song.Song;
 import tgeindre.Synthesizer.Input.Track.Track;
@@ -47,28 +41,19 @@ public class BaseArranger implements Arranger
         isStopRequested = false;
         isPlaying = true;
 
-        clock.reset();
-
-        Instrument inst = new AllKeys(new Default());
-
         Stack stack = new Stack();
-        stack.add(inst);
+        for (Track track: tracks) {
+            track.play();
+            stack.add(track);
+        }
 
-        Clip clip = new MainMelody();
+        while (!stack.isOver()) {
+            stack.clearOver();
+            output.addSample(stack.getValue(clock.getTickDuration()));
+        }
 
-        double lastSample = 0;
-
-        while (!isStopRequested && (!clip.isOver() || !inst.isOver() || lastSample != 0)) {
-            for (Message message : clip.pullMessages(clock.getTime())) {
-                if (message.isOn()) {
-                    inst.noteOn(message.getNote(), 1);
-                } else {
-                    inst.noteOff(message.getNote());
-                }
-            }
-
-            lastSample = stack.getValue(clock.getTickDuration());
-            output.addSample(lastSample);
+        if (isStopRequested) {
+            reset();
         }
 
         isPlaying = false;
@@ -92,12 +77,27 @@ public class BaseArranger implements Arranger
     @Override
     public void stop()
     {
+        if (!isPlaying) {
+            reset();
+            return;
+        }
+
         isStopRequested = true;
+        for (Track track: tracks) {
+            track.stop();
+        }
     }
 
     @Override
     public void close()
     {
         output.close();
+    }
+
+    public void reset()
+    {
+        for (Track track : tracks) {
+            track.reset();
+        }
     }
 }

@@ -10,4 +10,5 @@ public interface Arranger
     void close();
     void loadSong(Song song);
     void addTrack(Track track);
+    void reset();
 }

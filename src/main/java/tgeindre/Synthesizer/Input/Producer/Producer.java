@@ -8,4 +8,5 @@ public interface Producer extends Over
 {
     ArrayList<Message> pullMessages(double time);
     double getLength();
+    void reset();
 }

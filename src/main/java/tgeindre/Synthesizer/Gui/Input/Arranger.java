@@ -22,19 +22,28 @@ public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
 
     public void play()
     {
-        SwingWorker<Integer, Void> sw = new SwingWorker<>() {
+        eventDispatcher.dispatch(this, "play");
 
+        SwingWorker<Integer, Void> sw = new SwingWorker<>() {
             @Override
             protected Integer doInBackground() throws Exception
             {
-                arranger.play();
+                try {
+                    arranger.play();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 return 0;
             }
-        };
 
+            @Override
+            protected void done()
+            {
+                eventDispatcher.dispatch(Arranger.this, "stop");
+            }
+        };
         sw.execute();
-        eventDispatcher.dispatch(this, "play");
     }
 
     public void addActionListener(ActionListener l)
@@ -46,7 +55,6 @@ public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
     public void stop()
     {
         arranger.stop();
-        eventDispatcher.dispatch(this, "stop");
     }
 
     @Override
@@ -65,5 +73,11 @@ public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
     public void addTrack(Track track)
     {
         arranger.addTrack(track);
+    }
+
+    @Override
+    public void reset()
+    {
+        arranger.reset();
     }
 }

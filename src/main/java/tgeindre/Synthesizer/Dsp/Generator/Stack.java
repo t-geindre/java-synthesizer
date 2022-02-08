@@ -35,7 +35,6 @@ public class Stack implements Generator, Over
         for(Generator generator: generators) {
             if (generator instanceof Over && ((Over) generator).isOver()) {
                 toRemove.add(generator);
-                continue;
             }
         }
 

@@ -15,20 +15,24 @@ public class Track implements Generator, Over
     Instrument instrument;
     String name;
     ArrayList<ProducerOnTrack> producers;
+    ArrayList<String> notesOn;
     ProducerOnTrack producer;
     int maxIndex;
     int index;
     double lifeTime;
     double lastSample;
+    boolean isStopRequested;
 
     public Track(Instrument instrument, String name)
     {
         this.instrument = instrument;
         this.name = name;
         producers = new ArrayList<>();
+        notesOn = new ArrayList<>();
         index = 0;
         maxIndex = 0;
         lifeTime = 0;
+        isStopRequested = false;
     }
 
     public void append(Producer producer)
@@ -45,6 +49,13 @@ public class Track implements Generator, Over
     public void reset()
     {
         index = 0;
+        lifeTime = 0;
+        isStopRequested = false;
+        producer = null;
+
+        for (Producer producer : producers) {
+            producer.reset();
+        }
     }
 
     @Override
@@ -72,6 +83,15 @@ public class Track implements Generator, Over
 
     private void pullMessages()
     {
+        if (isStopRequested) {
+            for (String note : notesOn) {
+                instrument.noteOff(note);
+            }
+            notesOn.clear();
+
+            return;
+        }
+
         if (producer == null) {
             return;
         }
@@ -79,8 +99,10 @@ public class Track implements Generator, Over
         for (Message message : producer.pullMessages(lifeTime - producer.getAt())) {
             if (message.isOn()) {
                 instrument.noteOn(message.getNote(), 1);
+                notesOn.add(message.getNote());
             } else {
                 instrument.noteOff(message.getNote());
+                notesOn.remove(message.getNote());
             }
         }
     }
@@ -95,7 +117,7 @@ public class Track implements Generator, Over
             return;
         }
 
-        if (producers.get(index).getAt() >= lifeTime) {
+        if (producers.get(index).getAt() <= lifeTime) {
             producer = producers.get(index);
             index++;
         }
@@ -115,9 +137,24 @@ public class Track implements Generator, Over
         length = lastProducer.getAt() + lastProducer.getLength();
     }
 
+    public void stop()
+    {
+        isStopRequested = true;
+    }
+
+    public void play()
+    {
+        isStopRequested = false;
+    }
+
     @Override
     public boolean isOver()
     {
-        return index >= maxIndex && (producer == null || producer.isOver()) && lastSample == 0;
+        return (isProducersOver() || isStopRequested) && lastSample == 0;
+    }
+
+    private boolean isProducersOver()
+    {
+        return index >= maxIndex && (producer == null || producer.isOver());
     }
 }
