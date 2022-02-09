@@ -1,16 +1,13 @@
-package tgeindre.Synthesizer.Input.Track;
-
-import tgeindre.Synthesizer.Input.Producer.Message;
-import tgeindre.Synthesizer.Input.Producer.Producer;
+package tgeindre.Synthesizer.Input.Producer;
 
 import java.util.ArrayList;
 
-public class ProducerOnTrack implements Producer
+public class OnTrack implements Producer
 {
     Producer producer;
     double at;
 
-    public ProducerOnTrack(Producer producer, double at)
+    public OnTrack(Producer producer, double at)
     {
         this.producer = producer;
         this.at = at;

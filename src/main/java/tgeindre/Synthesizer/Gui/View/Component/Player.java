@@ -1,8 +1,7 @@
-package tgeindre.Synthesizer.Gui.Component;
+package tgeindre.Synthesizer.Gui.View.Component;
 
 import jiconfont.icons.font_awesome.FontAwesome;
 import jiconfont.swing.IconFontSwing;
-import tgeindre.Synthesizer.Gui.Input.Arranger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,14 +18,21 @@ public class Player extends JPanel implements ActionListener
     JButton buttonPlay;
     JButton buttonStop;
 
-    private Arranger arranger;
+    boolean isPlaying;
 
-    public Player(Arranger arranger)
+    tgeindre.Synthesizer.Gui.Input.Arranger arranger;
+
+    public Player(tgeindre.Synthesizer.Gui.Input.Arranger arranger)
     {
         super();
 
+        isPlaying = false;
+
         this.arranger = arranger;
         this.arranger.addActionListener(this);
+
+        setBackground(new Color(60, 63, 65));
+        setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, new Color(38, 38, 38)));
 
         iconPlay = IconFontSwing.buildIcon(FontAwesome.PLAY, 18, new Color(73, 155, 84));
         iconPause = IconFontSwing.buildIcon(FontAwesome.PAUSE, 18, new Color(73, 155, 84));
@@ -47,19 +53,27 @@ public class Player extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent actionEvent)
     {
         if (actionEvent.getSource() == buttonPlay) {
-            arranger.play();
+            if (!isPlaying) {
+                arranger.play();
+                return;
+            }
+            arranger.stop(false);
         }
 
         if (actionEvent.getSource() == buttonStop) {
-            arranger.stop();
+            arranger.stop(true);
+            return;
         }
 
         if (actionEvent.getSource() == arranger) {
             if (Objects.equals(actionEvent.getActionCommand(), "play")) {
                 buttonPlay.setIcon(iconPause);
+                isPlaying = true;
+                return;
             }
             if (Objects.equals(actionEvent.getActionCommand(), "stop")) {
                 buttonPlay.setIcon(iconPlay);
+                isPlaying = false;
             }
         }
     }

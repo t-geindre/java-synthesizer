@@ -1,22 +1,20 @@
 package tgeindre.Synthesizer.Gui.Input;
 
-import tgeindre.Synthesizer.Dsp.Ouput.Output;
 import tgeindre.Synthesizer.Gui.Event.Dispatcher;
 import tgeindre.Synthesizer.Gui.Event.Emitter;
-import tgeindre.Synthesizer.Input.Song.Song;
 import tgeindre.Synthesizer.Input.Track.Track;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
+public class Arranger extends tgeindre.Synthesizer.Input.Arranger implements Emitter
 {
-    tgeindre.Synthesizer.Input.Arranger arranger;
+    tgeindre.Synthesizer.Gui.View.Component.Arranger view;
     Dispatcher eventDispatcher;
 
-    public Arranger(tgeindre.Synthesizer.Input.Arranger arranger)
+    public Arranger()
     {
-        this.arranger = arranger;
+        view = new tgeindre.Synthesizer.Gui.View.Component.Arranger();
         eventDispatcher = new Dispatcher();
     }
 
@@ -29,7 +27,7 @@ public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
             protected Integer doInBackground() throws Exception
             {
                 try {
-                    arranger.play();
+                    Arranger.super.play();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -46,38 +44,21 @@ public class Arranger implements tgeindre.Synthesizer.Input.Arranger, Emitter
         sw.execute();
     }
 
-    public void addActionListener(ActionListener l)
-    {
-        eventDispatcher.addActionListener(l);
-    }
-
-    @Override
-    public void stop()
-    {
-        arranger.stop();
-    }
-
-    @Override
-    public void close()
-    {
-        arranger.close();
-    }
-
-    @Override
-    public void loadSong(Song song)
-    {
-        arranger.loadSong(song);
-    }
-
     @Override
     public void addTrack(Track track)
     {
-        arranger.addTrack(track);
+        view.addTrack(track);
+        super.addTrack(track);
+    }
+
+    public JComponent getView()
+    {
+        return view;
     }
 
     @Override
-    public void reset()
+    public void addActionListener(ActionListener l)
     {
-        arranger.reset();
+        eventDispatcher.addActionListener(l);
     }
 }
