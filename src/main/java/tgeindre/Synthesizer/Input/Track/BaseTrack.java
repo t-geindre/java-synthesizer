@@ -23,6 +23,7 @@ public class BaseTrack implements Generator, Over, Track
     double lifeTime;
     double lastSample;
     boolean isStopRequested;
+    double amplitude = 1;
 
     public BaseTrack(Instrument instrument, String name)
     {
@@ -70,7 +71,7 @@ public class BaseTrack implements Generator, Over, Track
         updateProducers();
         pullMessages();
 
-        lastSample = instrument.getValue(deltaTime);
+        lastSample = instrument.getValue(deltaTime) * amplitude;
 
         return lastSample;
     }
@@ -159,6 +160,16 @@ public class BaseTrack implements Generator, Over, Track
     public boolean isOver()
     {
         return (isProducersOver() || isStopRequested) && lastSample == 0;
+    }
+
+    @Override
+    public double getAmplitude() {
+        return amplitude;
+    }
+
+    public void setAmplitude(double amplitude)
+    {
+        this.amplitude = amplitude;
     }
 
     private boolean isProducersOver()

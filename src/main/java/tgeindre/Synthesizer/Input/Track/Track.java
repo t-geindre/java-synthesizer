@@ -7,20 +7,14 @@ import tgeindre.Synthesizer.Input.Producer.Producer;
 public interface Track extends Generator, Over
 {
     void append(Producer producer);
-
     void addAt(Producer producer, double at);
-
     void reset();
-
     double getValue(double deltaTime);
-
     String getName();
-
     void setName(String name);
-
     void stop();
-
     void play();
-
     boolean isOver();
+    double getAmplitude();
+    void setAmplitude(double amplitude);
 }
